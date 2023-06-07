@@ -1,6 +1,8 @@
 package util;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Date;
 import java.util.Scanner;
@@ -8,9 +10,9 @@ import java.util.Scanner;
 public class FileTutorials {
 
     // nowDate
-    private static String nowDate(){
-        Date date=new Date();
-        String nowChange="\n"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()+"\t";
+    private static String nowDate() {
+        Date date = new Date();
+        String nowChange = "\n" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + "\t";
         return nowChange;
     }
 
@@ -19,7 +21,7 @@ public class FileTutorials {
         Scanner klavye = new Scanner(System.in);
         System.out.println("Lütfen bir şeyler yazınız");
         String data = klavye.nextLine();
-        String concatString= nowDate().concat(data);
+        String concatString = nowDate().concat(data);
         return concatString;
     }
 
@@ -36,14 +38,21 @@ public class FileTutorials {
 
     // READER
     public static void myFileReader() {
-        try {
-
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(MyPathName.MY_PATH_NAME))) {
+            StringBuilder stringBuilder = new StringBuilder();
+            String readRows;
+            while ((readRows = bufferedReader.readLine()) != null) {
+                stringBuilder.append("\n").append(readRows);
+            }
+            String dataToString = stringBuilder.toString();
+            System.out.println(dataToString);
+            System.out.println("OKUNDU");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void fileTutorials(){
+    public static void fileTutorials() {
         try {
             // C:\io\ecodation\eco9.txt
            /* File file = new File(MyPathName.MY_PATH_NAME);
@@ -92,6 +101,8 @@ public class FileTutorials {
     }
 
     public static void main(String[] args) {
-      myFileWriter();
+       // myFileWriter();
+        myFileReader();
+
     }
 }
