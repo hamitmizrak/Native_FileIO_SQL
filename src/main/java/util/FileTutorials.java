@@ -1,18 +1,57 @@
 package util;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.util.Date;
+import java.util.Scanner;
 
 public class FileTutorials {
-    public static void main(String[] args) throws IOException {
+
+    // nowDate
+    private static String nowDate(){
+        Date date=new Date();
+        String nowChange="\n"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()+"\t";
+        return nowChange;
+    }
+
+    // userData
+    private static String userData() {
+        Scanner klavye = new Scanner(System.in);
+        System.out.println("Lütfen bir şeyler yazınız");
+        String data = klavye.nextLine();
+        String concatString= nowDate().concat(data);
+        return concatString;
+    }
+
+    // WRITER
+    public static void myFileWriter() {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(MyPathName.MY_PATH_NAME, true))) {
+            String user = userData();
+            bufferedWriter.write(user);
+            bufferedWriter.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // READER
+    public static void myFileReader() {
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void fileTutorials(){
         try {
             // C:\io\ecodation\eco9.txt
-            File file = new File(MyPathName.MY_PATH_NAME);
+           /* File file = new File(MyPathName.MY_PATH_NAME);
 
             System.out.println("### IS ###");
             System.out.println(file.isFile());
             System.out.println(file.isDirectory());
-            System.out.println("SAKLI MI "+file.isHidden());
+            System.out.println("SAKLI MI " + file.isHidden());
 
             System.out.println("### CAN ###");
             System.out.println("Read: " + file.canRead());
@@ -35,15 +74,24 @@ public class FileTutorials {
             System.out.println("FREE SPACE: " + file.getFreeSpace());
             System.out.println("TOTAL SPACE: " + file.getTotalSpace());
             System.out.println("Absolute Path: " + file.getAbsolutePath());
-            System.out.println("Canonical Path: " + file.getCanonicalPath());
+            System.out.println("Canonical Path: " + file.getCanonicalPath());*/
 
             // PATH, Absolute Path, Canonical Path
 
-            // Relative Path(Dynamics), Absolute Path(static)
-            // Relative Path(Dynamics) ==> /picture/admin
-            // Absolute Path(static)   ==> /picture/admin/register.png
+            // Relative Path(Dynamics), Absolute Path(static: domain ismini yazarız)
+            // Relative Path(Dynamics) ==> /picture/register.png
+            // Absolute Path(static)   ==> www.deneme.com/picture/register.png
+
+            // URL: ana kaynak / URI: resim belge tam adresi
+            // URL : www.deneme.com
+            // URI : www.deneme.com/resim/register.png
+            // URI=URL/picture
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+      myFileWriter();
     }
 }
