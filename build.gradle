@@ -21,8 +21,10 @@ repositories {
 
 
 /*Turkish character */
-compileJava {
-    options.encoding = "UTF-8"
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
 
 dependencies {
@@ -39,6 +41,9 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+
+
 test {
+    systemProperty "file.encoding", "utf-8"
     useJUnitPlatform()
 }
