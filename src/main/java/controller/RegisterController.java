@@ -76,7 +76,7 @@ public class RegisterController {
 
         // Hak sayısı
         int counter = myFileReader();
-
+        // interface abstract inheritance nedir ? bunlarsınız kod yazabilir miyiz?
         if (counter >= 0) {
             if (MyPathName.FAKE_PASSWORD.equals(userPassword) && MyPathName.FAKE_EMAIL.equals(userEmail)) {
                 System.out.println("Admin Sayfasına Yönlendiriliyorsunuz");
@@ -90,6 +90,8 @@ public class RegisterController {
                 counter--;
                 myFileWriterNumberOfRights(counter);
             }
+        }else{
+            myFileWriter();
         }
         return false;
     }
