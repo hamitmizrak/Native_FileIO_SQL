@@ -38,6 +38,10 @@ public class FileTutorials {
             System.out.println("Canonical Path: " + file.getCanonicalPath());
 
             // PATH, Absolute Path, Canonical Path
+
+            // Relative Path(Dynamics), Absolute Path(static)
+            // Relative Path(Dynamics) ==> /picture/admin
+            // Absolute Path(static)   ==> /picture/admin/register.png
         } catch (Exception exception) {
             exception.printStackTrace();
         }
