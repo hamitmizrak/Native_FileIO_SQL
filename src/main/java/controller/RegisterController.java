@@ -1,7 +1,6 @@
 package controller;
 
 import util.MyPathName;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -19,7 +18,7 @@ public class RegisterController {
         return data;
     }
 
-    // WRITER HAK SAYISI
+    // WRITER HAK SAYISI ADMIN BELIRLESIN
     public static void myFileWriter() {
         // false: en son file silsin ve en son eklenen, eklensin.
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(MyPathName.MY_PATH_NAME, false))) {
@@ -30,7 +29,6 @@ public class RegisterController {
             e.printStackTrace();
         }
     }
-
 
     // Kalan Hakkı Dosyaya yazsın
     public static void myFileWriterNumberOfRights(int counter) {
@@ -44,7 +42,6 @@ public class RegisterController {
     }
 
 
-
     // READER HAK SAYISI
     public static int myFileReader() {
         String dataToString = null;
@@ -56,7 +53,7 @@ public class RegisterController {
                 stringBuilder.append(readRows);
             }
             dataToString = stringBuilder.toString();
-            System.out.println(dataToString);
+            //System.out.println(dataToString);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -67,31 +64,30 @@ public class RegisterController {
     // username: root password:root => admin sayfasına yönlendirsin
     // eğer yanlış yaparsa haktan 1 azaltsın eğer hakkınız kalmazsa sistemi kilitlesin
     public static boolean isLogin() {
-        String userEmail, userPassword;
-        Scanner klavye = new Scanner(System.in);
-        System.out.println("\nLütfen Emailinizi giriniz");
-        userEmail = klavye.nextLine();
-        System.out.println("Lütfen Şifrenizi giriniz");
-        userPassword = klavye.nextLine();
-
         // Hak sayısı
         int counter = myFileReader();
         // interface abstract inheritance nedir ? bunlarsınız kod yazabilir miyiz?
-        if (counter >= 0) {
+        if (counter == 0) {
+            if (counter == 0) {
+                System.out.println("Hakkınız kalmadı hesanız bloke oldu");
+                System.exit(0);
+            }
+        } else if (counter >=1) {
+            String userEmail, userPassword;
+            Scanner klavye = new Scanner(System.in);
+            System.out.println("\nLütfen Emailinizi giriniz");
+            userEmail = klavye.nextLine();
+            System.out.println("Lütfen Şifrenizi giriniz");
+            userPassword = klavye.nextLine();
             if (MyPathName.FAKE_PASSWORD.equals(userPassword) && MyPathName.FAKE_EMAIL.equals(userEmail)) {
                 System.out.println("Admin Sayfasına Yönlendiriliyorsunuz");
                 return true;
             } else {
-                System.out.println("Kalan Hakkınız: "+(counter-1));
+                System.out.println("Kalan Hakkınız: " + (counter-1));
                 System.out.println("Kullanıcı adınız veya şifreniz yanlış");
-                if (counter == 0) {
-                    System.out.println("Hakkınız kalmadı hesanız bloke oldu");
-                }
                 counter--;
                 myFileWriterNumberOfRights(counter);
             }
-        }else{
-            myFileWriter();
         }
         return false;
     }
