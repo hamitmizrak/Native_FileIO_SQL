@@ -3,6 +3,7 @@ package controller;
 import dao.BlogDao;
 import dto.BlogDto;
 import exception.BadRequestException;
+
 import javax.swing.*;
 import java.util.Scanner;
 import java.util.UUID;
@@ -33,8 +34,8 @@ public class BlogController implements IBlogController {
     // FIND
     @Override
     public void blogFind(Long id) {
-       BlogDto find= blogDao.findById(id);
-        System.out.println("\n "+find);
+        BlogDto find = blogDao.findById(id);
+        System.out.println("\n " + find);
     }
 
 
@@ -86,7 +87,7 @@ public class BlogController implements IBlogController {
                 blogList();
                 String str = JOptionPane.showInputDialog("Bulmak isterdiğiniz ID giriniz");
                 Long stringToInteger = Long.valueOf(str);
-             blogFind(stringToInteger);
+                blogFind(stringToInteger);
                 break;
             case 3:
                 String header, content;
@@ -121,9 +122,9 @@ public class BlogController implements IBlogController {
                 blogDelete(blogDto3);
                 break;
             case 6:
-                for (int i = 1; i <=5 ; i++) {
-                    BlogDto blogDtoSpeed=new BlogDto();
-                    blogDtoSpeed.setHeader("header "+i);
+                for (int i = 1; i <= 5; i++) {
+                    BlogDto blogDtoSpeed = new BlogDto();
+                    blogDtoSpeed.setHeader("header " + i);
                     blogDtoSpeed.setContent(UUID.randomUUID().toString());
                     blogCreate(blogDtoSpeed);
                 }
