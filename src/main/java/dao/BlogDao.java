@@ -1,8 +1,8 @@
 package dao;
 
 import dto.BlogDto;
+import exception.BadRequestException;
 import exception.ResourceNotFoundException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +18,6 @@ public class BlogDao implements IDaoGenerics<BlogDto> {
             // Transaction: ya hep ya hiç kuralına göre çalışır
             // Create, Delete, Update
             connection.setAutoCommit(false);
-
             // insert into one_page.blog (header,content) values ("Css2","Cont data css");
             String sql = "insert into one_page.blog (header,content) values (?,?)";
             PreparedStatement pstm = connection.prepareStatement(sql);
@@ -47,15 +46,15 @@ public class BlogDao implements IDaoGenerics<BlogDto> {
     // LIST
     @Override
     public ArrayList<BlogDto> list() {
-        ArrayList<BlogDto> blogDtoList=new ArrayList<>();
+        ArrayList<BlogDto> blogDtoList = new ArrayList<>();
         BlogDto blogDto;
         try (Connection connection = getInterfaceConnection()) {
             // select * from one_page.blog;
             String sql = "select * from one_page.blog";
             PreparedStatement pstm = connection.prepareStatement(sql);
-            ResultSet resultSet=pstm.executeQuery();
-            while(resultSet.next()){
-                blogDto=new BlogDto();
+            ResultSet resultSet = pstm.executeQuery();
+            while (resultSet.next()) {
+                blogDto = new BlogDto();
                 blogDto.setId(resultSet.getLong("id"));
                 blogDto.setHeader(resultSet.getString("header"));
                 blogDto.setContent(resultSet.getString("content"));
@@ -70,23 +69,106 @@ public class BlogDao implements IDaoGenerics<BlogDto> {
             e.printStackTrace();
         }
         return blogDtoList;
-    }
+    } // end LIST
 
     // FIND
     @Override
-    public void findById(Long id) {
-
-    }
+    public BlogDto findById(Long id) {
+        BlogDto blogDto = new BlogDto();
+        try (Connection connection = getInterfaceConnection()) {
+            // select * from one_page.blog where id =1;;
+            String sql = "select * from one_page.blog where id=" + id;
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            ResultSet resultSet = pstm.executeQuery();
+            while (resultSet.next()) {
+                blogDto.setId(resultSet.getLong("id"));
+                blogDto.setHeader(resultSet.getString("header"));
+                blogDto.setContent(resultSet.getString("content"));
+                blogDto.setSystemCreatedDate(resultSet.getDate("created_date"));
+            }
+        } catch (SQLException sql) { // AritmeticException | ClassNotFoundException e
+            sql.printStackTrace();
+            throw new ResourceNotFoundException(" SQL Find İstisnası " + sql);
+        } catch (Exception e) { // AritmeticException | ClassNotFoundException e
+            e.printStackTrace();
+        }
+        return blogDto;
+    } // end FIND
 
     // UPDATE
     @Override
     public void update(BlogDto blogDto) {
-
-    }
+        try (Connection connection = getInterfaceConnection()) {
+            // Transaction: ya hep ya hiç kuralına göre çalışır
+            // Create, Delete, Update
+            connection.setAutoCommit(false);
+            //Eğer İlgili ID varsa Güncelleme yapsın yoksa yapmasın
+            BlogDto blogDtoFind = findById(blogDto.getId());
+            if (blogDtoFind != null) {
+                // update one_page.blog set header="Hamit55",content="Mızrak55" where id =1;
+                String sql = "update one_page.blog set header=? ,content=? where id =?";
+                PreparedStatement pstm = connection.prepareStatement(sql);
+                pstm.setString(1, blogDto.getHeader());
+                pstm.setString(2, blogDto.getContent());
+                pstm.setLong(3, blogDto.getId());
+                // UPDATE YAPISILSIN
+                // executeUpdate: CREATE, DELETE, UPDATE
+                // executeQuery : SELECT
+                Integer rowsEffected = pstm.executeUpdate();
+                // Eğer Sıfırdan büyükse : Eklemiş -1=ise Eklenmemiş
+                if (rowsEffected > 0) {
+                    System.out.println(BlogDto.class + " Güncellendi");
+                    connection.commit();
+                } else {
+                    System.out.println(BlogDto.class + " HATA Güncellenemedi !!!!");
+                    connection.rollback();
+                }
+            } else {
+                throw new BadRequestException(blogDto.getId() + " id yoktur");
+            }
+        } catch (SQLException sql) { // AritmeticException | ClassNotFoundException e
+            sql.printStackTrace();
+            throw new ResourceNotFoundException(" SQL Güncelleme İstisnası " + sql);
+        } catch (Exception e) { // AritmeticException | ClassNotFoundException e
+            e.printStackTrace();
+        }
+    } // end FIND
 
     // DELETE
     @Override
     public void delete(BlogDto blogDto) {
+        try (Connection connection = getInterfaceConnection()) {
+            // Transaction: ya hep ya hiç kuralına göre çalışır
+            // Create, Delete, Update
+            connection.setAutoCommit(false);
+            //Eğer İlgili ID varsa Güncelleme yapsın yoksa yapmasın
+            BlogDto blogDtoFind = findById(blogDto.getId());
+            if (blogDtoFind != null) {
+                // delete FROM one_page.blog where id="1";
+                String sql = "update one_page.blog set header=? ,content=? where id =?";
+                PreparedStatement pstm = connection.prepareStatement(sql);
+                pstm.setLong(1, blogDto.getId());
+                // UPDATE YAPISILSIN
+                // executeUpdate: CREATE, DELETE, UPDATE
+                // executeQuery : SELECT
+                Integer rowsEffected = pstm.executeUpdate();
+                // Eğer Sıfırdan büyükse : Eklemiş -1=ise Eklenmemiş
+                if (rowsEffected > 0) {
+                    System.out.println(BlogDto.class + " Silindi");
+                    connection.commit();
+                } else {
+                    System.out.println(BlogDto.class + " HATA Silinmedi !!!!");
+                    connection.rollback();
+                }
+            } else {
+                throw new BadRequestException(blogDto.getId() + " id yoktur");
+            }
+        } catch (SQLException sql) { // AritmeticException | ClassNotFoundException e
+            sql.printStackTrace();
+            throw new ResourceNotFoundException(" SQL Güncelleme İstisnası " + sql);
+        } catch (Exception e) { // AritmeticException | ClassNotFoundException e
+            e.printStackTrace();
+        }
+    }//end DELETE
 
-    }
-}
+} //end class

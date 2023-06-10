@@ -15,7 +15,7 @@ public interface IDaoGenerics<T> {
     public ArrayList<T> list();
 
     // FIND
-    public void findById(Long id);
+    public T findById(Long id);
 
     // UPDATE
     public void update(T t);
