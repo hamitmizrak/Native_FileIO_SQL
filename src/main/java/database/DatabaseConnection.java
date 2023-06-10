@@ -1,9 +1,15 @@
 package database;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+// LOMBOK
+@Getter
+@Setter
 public class DatabaseConnection extends DatabaseInformation {
 
     // Üst Class gelen verileri almak
