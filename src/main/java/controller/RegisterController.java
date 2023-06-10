@@ -95,8 +95,8 @@ public class RegisterController {
 
 
     // LOGIN REGISTER
-    private static void isLoginRegister(){
-        boolean result=false;
+    public void isLoginRegister() {
+        boolean result = false;
 
         // Login Register
         while (true) {
@@ -106,20 +106,16 @@ public class RegisterController {
         }
 
         // Eğer sistemde bir kullanıcı varsa bu sayyfaya gitsin
-        if(result){
+        if (result) {
             blogPage();
         }
     }
 
     // BLOG PAGE
-    private static void blogPage(){
+    private static void blogPage() {
         System.out.println("Blog Main sayfasına Hoş geldiniz");
         System.out.println("Lütfen seçiminizi yapınız");
     }
 
-    public static void main(String[] args) {
-        isLoginRegister();
-
-    }
 
 } //end class
