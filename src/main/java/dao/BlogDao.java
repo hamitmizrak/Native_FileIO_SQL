@@ -3,6 +3,7 @@ package dao;
 import dto.BlogDto;
 import exception.BadRequestException;
 import exception.ResourceNotFoundException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -80,19 +81,21 @@ public class BlogDao implements IDaoGenerics<BlogDto> {
             String sql = "select * from one_page.blog where id=" + id;
             PreparedStatement pstm = connection.prepareStatement(sql);
             ResultSet resultSet = pstm.executeQuery();
+            //System.out.println(resultSet.next());
+            //boolean isFind=resultSet.first();
             while (resultSet.next()) {
                 blogDto.setId(resultSet.getLong("id"));
                 blogDto.setHeader(resultSet.getString("header"));
                 blogDto.setContent(resultSet.getString("content"));
                 blogDto.setSystemCreatedDate(resultSet.getDate("created_date"));
             }
+            System.out.println(blogDto);
         } catch (SQLException sql) { // AritmeticException | ClassNotFoundException e
             sql.printStackTrace();
             throw new ResourceNotFoundException(" SQL Find İstisnası " + sql);
         } catch (Exception e) { // AritmeticException | ClassNotFoundException e
             e.printStackTrace();
         }
-        System.out.println(blogDto);
         return blogDto;
     } // end FIND
 

@@ -34,8 +34,12 @@ public class BlogController implements IBlogController {
     // FIND
     @Override
     public void blogFind(Long id) {
-        BlogDto find = blogDao.findById(id);
-        System.out.println("\n " + find);
+        BlogDto findById = blogDao.findById(id);
+        if(findById.getId()!=null){
+            System.out.println("\n" + findById);
+        }else{
+            System.err.println(id+" nolu bulunamadı");
+        }
     }
 
 
@@ -43,7 +47,7 @@ public class BlogController implements IBlogController {
     @Override
     public void blogUpdate(BlogDto blogDto) {
         BlogDto findById = blogDao.findById(blogDto.getId());
-        if (findById != null) {
+        if (findById.getId()!=null) {
             blogDao.update(blogDto);
         } else
             throw new BadRequestException(blogDto.getId() + " id bulunamadı");
@@ -53,7 +57,7 @@ public class BlogController implements IBlogController {
     @Override
     public void blogDelete(BlogDto blogDto) {
         BlogDto findById = blogDao.findById(blogDto.getId());
-        if (findById != null) {
+        if (findById.getId()!=null) {
             blogDao.delete(blogDto);
         } else
             throw new BadRequestException(blogDto.getId() + " id bulunamadı");
