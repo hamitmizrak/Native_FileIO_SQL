@@ -1,14 +1,12 @@
 package dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
 
 // LOMBOK
-@Data
+@Getter @Setter
 @AllArgsConstructor
 @Builder
 public class BlogDto extends BaseDto implements Serializable {

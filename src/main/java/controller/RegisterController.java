@@ -1,5 +1,6 @@
 package controller;
 
+import util.InMemoryData;
 import util.MyPathName;
 
 import java.io.BufferedReader;
@@ -79,7 +80,7 @@ public class RegisterController {
             userEmail = klavye.nextLine();
             System.out.println("Lütfen Şifrenizi giriniz");
             userPassword = klavye.nextLine();
-            if (MyPathName.FAKE_PASSWORD.equals(userPassword) && MyPathName.FAKE_EMAIL.equals(userEmail)) {
+            if (InMemoryData.FAKE_PASSWORD.equals(userPassword) && InMemoryData.FAKE_PASSWORD.equals(userEmail)) {
                 System.out.println("Admin Sayfasına Yönlendiriliyorsunuz");
                 return true;
             } else {
