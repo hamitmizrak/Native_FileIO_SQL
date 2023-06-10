@@ -28,9 +28,9 @@ public class DatabaseConnection extends DatabaseInformation {
     private DatabaseConnection() throws ClassNotFoundException, SQLException {
         try {
             Class.forName(this.forNameData);
-            System.out.println("Driver Basarili bir sekilde yuklendi");
+            //System.out.println("Driver Basarili bir sekilde yuklendi");
             connection= DriverManager.getConnection(url,user,password);
-            System.out.println("Database Basarili bir sekilde yuklendi");
+            //System.out.println("Database Basarili bir sekilde yuklendi");
         } catch (Exception e) {
             e.printStackTrace();
         }

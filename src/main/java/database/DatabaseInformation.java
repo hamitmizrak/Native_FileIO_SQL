@@ -15,7 +15,7 @@ public class DatabaseInformation {
     public DatabaseInformation() {
         this.user="root";
         this.password="root";
-        this.url="jdbc:mysql://localhost:3306/blog";
+        this.url="jdbc:mysql://localhost:3306/one_page";
         this.forNameData="com.mysql.cj.jdbc.Driver";
     }
     // parametreli constructor

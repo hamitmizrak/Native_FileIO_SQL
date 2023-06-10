@@ -92,6 +92,7 @@ public class BlogDao implements IDaoGenerics<BlogDto> {
         } catch (Exception e) { // AritmeticException | ClassNotFoundException e
             e.printStackTrace();
         }
+        System.out.println(blogDto);
         return blogDto;
     } // end FIND
 

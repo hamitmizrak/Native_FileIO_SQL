@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class RegisterController {
 
+
     // Kullanıcı için verilecek hak
     // userData
     private static String userData() {
@@ -113,8 +114,10 @@ public class RegisterController {
 
     // BLOG PAGE
     private static void blogPage() {
-        System.out.println("Blog Main sayfasına Hoş geldiniz");
-        System.out.println("Lütfen seçiminizi yapınız");
+        BlogController  blogController=new BlogController();
+        for(;;){ // Sonsuz Döngü
+            blogController.chooiseMethod();
+        }
     }
 
 

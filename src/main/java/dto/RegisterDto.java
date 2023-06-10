@@ -6,7 +6,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 // LOMBOK
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @Builder
 public class RegisterDto extends BaseDto implements Serializable {
