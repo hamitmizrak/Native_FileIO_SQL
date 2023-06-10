@@ -132,7 +132,7 @@ public class BlogDao implements IDaoGenerics<BlogDto> {
         } catch (Exception e) { // AritmeticException | ClassNotFoundException e
             e.printStackTrace();
         }
-    } // end FIND
+    } // end UPDATE
 
     // DELETE
     @Override
