@@ -1,6 +1,7 @@
 package controller;
 
 import util.MyPathName;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -41,7 +42,6 @@ public class RegisterController {
         }
     }
 
-
     // READER HAK SAYISI
     public static int myFileReader() {
         String dataToString = null;
@@ -72,7 +72,7 @@ public class RegisterController {
                 System.out.println("Hakkınız kalmadı hesanız bloke oldu");
                 System.exit(0);
             }
-        } else if (counter >=1) {
+        } else if (counter >= 1) {
             String userEmail, userPassword;
             Scanner klavye = new Scanner(System.in);
             System.out.println("\nLütfen Emailinizi giriniz");
@@ -83,7 +83,7 @@ public class RegisterController {
                 System.out.println("Admin Sayfasına Yönlendiriliyorsunuz");
                 return true;
             } else {
-                System.out.println("Kalan Hakkınız: " + (counter-1));
+                System.out.println("Kalan Hakkınız: " + (counter - 1));
                 System.out.println("Kullanıcı adınız veya şifreniz yanlış");
                 counter--;
                 myFileWriterNumberOfRights(counter);
@@ -92,12 +92,32 @@ public class RegisterController {
         return false;
     }
 
-    public static void main(String[] args) {
-        // myFileWriter();
-        // System.out.println(myFileReader());
+
+    // LOGIN REGISTER
+    private static void isLoginRegister(){
+        boolean result=false;
+
+        // Login Register
         while (true) {
-            boolean result = isLogin();
+            result = isLogin();
+            if (result)
+                break;
         }
+
+        // Eğer sistemde bir kullanıcı varsa bu sayyfaya gitsin
+        if(result){
+            blogPage();
+        }
+    }
+
+    // BLOG PAGE
+    private static void blogPage(){
+        System.out.println("Blog Main sayfasına Hoş geldiniz");
+        System.out.println("Lütfen seçiminizi yapınız");
+    }
+
+    public static void main(String[] args) {
+        isLoginRegister();
 
     }
 
