@@ -49,7 +49,7 @@ public class RegisterController {
     }
 
     // READER HAK SAYISI
-    private int myFileReader() {
+    private Integer myFileReader() {
         String dataToString = null;
         Integer numberOfRights = null; //hak sayısı
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(fileNewPath.getPath()))) {
@@ -60,11 +60,16 @@ public class RegisterController {
             }
             dataToString = stringBuilder.toString();
             System.out.println(dataToString);
-            if(dataToString.equals("") || dataToString.equals(" ")|| dataToString=="" || dataToString==" " || dataToString==null){
+            if (dataToString.equals("") || dataToString.equals(" ") || dataToString == "" || dataToString == " " || dataToString == null) {
                 adminMyFileWriter();
             }
+            if (dataToString.equals("") || dataToString.equals(" ") || dataToString == "" || dataToString == " " || dataToString == null) {
+                //eğer exo9.txt null olursa 5 default hak olsun
+                //dataToString = "5";
+                isLogin();
+            }
             numberOfRights = Integer.valueOf(dataToString);
-            System.out.println(numberOfRights);
+            //System.out.println(numberOfRights);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,7 +82,7 @@ public class RegisterController {
         // Hak sayısı (Admin)
         //myFileWriter();
         Integer counter = myFileReader();
-        System.out.println(counter);
+        //System.out.println(counter);
         // interface abstract inheritance nedir ? bunlarsınız kod yazabilir miyiz?
         if (counter == 0) {
             if (counter == 0) {
