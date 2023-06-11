@@ -35,10 +35,10 @@ public class BlogController implements IBlogController {
     @Override
     public void blogFind(Long id) {
         BlogDto findById = blogDao.findById(id);
-        if(findById.getId()!=null){
+        if (findById.getId() != null) {
             System.out.println("\n" + findById);
-        }else{
-            System.err.println(id+" nolu bulunamadı");
+        } else {
+            System.err.println(id + " nolu bulunamadı");
         }
     }
 
@@ -46,21 +46,13 @@ public class BlogController implements IBlogController {
     // UPDATE
     @Override
     public void blogUpdate(BlogDto blogDto) {
-        BlogDto findById = blogDao.findById(blogDto.getId());
-        if (findById.getId()!=null) {
-            blogDao.update(blogDto);
-        } else
-            throw new BadRequestException(blogDto.getId() + " id bulunamadı");
+        blogDao.update(blogDto);
     }
 
     // DELETE
     @Override
     public void blogDelete(BlogDto blogDto) {
-        BlogDto findById = blogDao.findById(blogDto.getId());
-        if (findById.getId()!=null) {
             blogDao.delete(blogDto);
-        } else
-            throw new BadRequestException(blogDto.getId() + " id bulunamadı");
     }
 
     // ###########################################################################
@@ -107,23 +99,36 @@ public class BlogController implements IBlogController {
                 blogList();
                 // Blog Dto Instance
                 BlogDto blogDto2 = new BlogDto();
-                String strUpdate = JOptionPane.showInputDialog("Bulmak isterdiğiniz ID giriniz");
+                String strUpdate = JOptionPane.showInputDialog("Güncellemek isterdiğiniz ID giriniz");
                 Long stringToInteger2 = Long.valueOf(strUpdate);
                 blogDto2.setId(stringToInteger2);
-                String header2, content2;
-                header2 = JOptionPane.showInputDialog("Blog için header giriniz");
-                content2 = JOptionPane.showInputDialog("Blog için content");
-                blogDto2.setHeader(header2);
-                blogDto2.setContent(content2);
-                blogUpdate(blogDto2);
+
+                BlogDto findById = blogDao.findById(blogDto2.getId());
+                if (findById.getId() != null) {
+                    String header2, content2;
+                    header2 = JOptionPane.showInputDialog("Güncellenecek Blog için header giriniz");
+                    content2 = JOptionPane.showInputDialog("Güncellencek Blog için content");
+                    blogDto2.setHeader(header2);
+                    blogDto2.setContent(content2);
+                    blogUpdate(blogDto2);
+                } else {
+                    System.err.println(findById.getId() + " nolu bulunamadı");
+                }
                 break;
             case 5:
                 blogList();
                 BlogDto blogDto3 = new BlogDto();
-                String strDelete = JOptionPane.showInputDialog("Bulmak isterdiğiniz ID giriniz");
+                String strDelete = JOptionPane.showInputDialog("Silmek isterdiğiniz ID giriniz");
                 Long stringToInteger3 = Long.valueOf(strDelete);
                 blogDto3.setId(stringToInteger3);
-                blogDelete(blogDto3);
+
+                BlogDto findById3 = blogDao.findById(blogDto3.getId());
+                if (findById3.getId() != null) {
+                    blogDelete(blogDto3);
+                } else {
+                    //throw new BadRequestException(blogDto.getId() + " id bulunamadı");
+                    System.err.println("Aradığınız " + blogDto3.getId() + " ID YOKTUR");
+                }
                 break;
             case 6:
                 for (int i = 1; i <= 5; i++) {

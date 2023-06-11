@@ -106,29 +106,23 @@ public class BlogDao implements IDaoGenerics<BlogDto> {
             // Transaction: ya hep ya hiç kuralına göre çalışır
             // Create, Delete, Update
             connection.setAutoCommit(false);
-            //Eğer İlgili ID varsa Güncelleme yapsın yoksa yapmasın
-            BlogDto blogDtoFind = findById(blogDto.getId());
-            if (blogDtoFind != null) {
-                // update one_page.blog set header="Hamit55",content="Mızrak55" where id =1;
-                String sql = "update one_page.blog set header=? ,content=? where id =?";
-                PreparedStatement pstm = connection.prepareStatement(sql);
-                pstm.setString(1, blogDto.getHeader());
-                pstm.setString(2, blogDto.getContent());
-                pstm.setLong(3, blogDto.getId());
-                // UPDATE YAPISILSIN
-                // executeUpdate: CREATE, DELETE, UPDATE
-                // executeQuery : SELECT
-                Integer rowsEffected = pstm.executeUpdate();
-                // Eğer Sıfırdan büyükse : Eklemiş -1=ise Eklenmemiş
-                if (rowsEffected > 0) {
-                    System.out.println(BlogDto.class + " Güncellendi");
-                    connection.commit();
-                } else {
-                    System.out.println(BlogDto.class + " HATA Güncellenemedi !!!!");
-                    connection.rollback();
-                }
+            // update one_page.blog set header="Hamit55",content="Mızrak55" where id =1;
+            String sql = "update one_page.blog set header=? ,content=? where id =?";
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            pstm.setString(1, blogDto.getHeader());
+            pstm.setString(2, blogDto.getContent());
+            pstm.setLong(3, blogDto.getId());
+            // UPDATE YAPISILSIN
+            // executeUpdate: CREATE, DELETE, UPDATE
+            // executeQuery : SELECT
+            Integer rowsEffected = pstm.executeUpdate();
+            // Eğer Sıfırdan büyükse : Eklemiş -1=ise Eklenmemiş
+            if (rowsEffected > 0) {
+                System.out.println(BlogDto.class + " ID: "+blogDto.getId()+" SİLİNDİ");
+                connection.commit();
             } else {
-                throw new BadRequestException(blogDto.getId() + " id yoktur");
+                System.out.println(BlogDto.class + " HATA Güncellenemedi !!!!");
+                connection.rollback();
             }
         } catch (SQLException sql) { // AritmeticException | ClassNotFoundException e
             sql.printStackTrace();
@@ -146,26 +140,21 @@ public class BlogDao implements IDaoGenerics<BlogDto> {
             // Create, Delete, Update
             connection.setAutoCommit(false);
             //Eğer İlgili ID varsa Güncelleme yapsın yoksa yapmasın
-            BlogDto blogDtoFind = findById(blogDto.getId());
-            if (blogDtoFind != null) {
-                // delete FROM one_page.blog where id="1";
-                String sql = "update one_page.blog set header=? ,content=? where id =?";
-                PreparedStatement pstm = connection.prepareStatement(sql);
-                pstm.setLong(1, blogDto.getId());
-                // UPDATE YAPISILSIN
-                // executeUpdate: CREATE, DELETE, UPDATE
-                // executeQuery : SELECT
-                Integer rowsEffected = pstm.executeUpdate();
-                // Eğer Sıfırdan büyükse : Eklemiş -1=ise Eklenmemiş
-                if (rowsEffected > 0) {
-                    System.out.println(BlogDto.class + " Silindi");
-                    connection.commit();
-                } else {
-                    System.out.println(BlogDto.class + " HATA Silinmedi !!!!");
-                    connection.rollback();
-                }
+
+            String sql = "delete FROM one_page.blog where id=?";
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            pstm.setLong(1, blogDto.getId());
+            // DELETE YAPISILSIN
+            // executeUpdate: CREATE, DELETE, UPDATE
+            // executeQuery : SELECT
+            Integer rowsEffected = pstm.executeUpdate();
+            // Eğer Sıfırdan büyükse : Eklemiş -1=ise Eklenmemiş
+            if (rowsEffected > 0) {
+                System.out.println(BlogDto.class + " ID: " + blogDto.getId() + " Silindir");
+                connection.commit();
             } else {
-                throw new BadRequestException(blogDto.getId() + " id yoktur");
+                System.out.println(BlogDto.class + " HATA Silinmedi !!!!");
+                connection.rollback();
             }
         } catch (SQLException sql) { // AritmeticException | ClassNotFoundException e
             sql.printStackTrace();
