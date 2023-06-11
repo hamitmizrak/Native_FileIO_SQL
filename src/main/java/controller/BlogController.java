@@ -2,8 +2,6 @@ package controller;
 
 import dao.BlogDao;
 import dto.BlogDto;
-import exception.BadRequestException;
-
 import javax.swing.*;
 import java.util.Scanner;
 import java.util.UUID;

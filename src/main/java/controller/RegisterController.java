@@ -2,7 +2,6 @@ package controller;
 
 import util.InMemoryData;
 import util.FileNewPath;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -12,7 +11,6 @@ import java.util.Scanner;
 public class RegisterController {
 
     private FileNewPath fileNewPath = new FileNewPath();
-
 
     // Kullanıcı için verilecek hak
     // userData

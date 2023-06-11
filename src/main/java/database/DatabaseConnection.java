@@ -2,7 +2,6 @@ package database;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -51,10 +50,7 @@ public class DatabaseConnection extends DatabaseInformation {
         return instance;
     }
 
-
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         //DatabaseConnection connection1=new DatabaseConnection();
     }
-}
-
-
+} //end DatabaseConnection

@@ -1,9 +1,7 @@
 package dao;
 
 import dto.BlogDto;
-import exception.BadRequestException;
 import exception.ResourceNotFoundException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
