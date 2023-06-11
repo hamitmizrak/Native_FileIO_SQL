@@ -1,7 +1,7 @@
 package controller;
 
 import util.InMemoryData;
-import util.MyPathName;
+import util.FileNewPath;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,6 +10,8 @@ import java.io.FileWriter;
 import java.util.Scanner;
 
 public class RegisterController {
+
+    private FileNewPath fileNewPath = new FileNewPath();
 
 
     // Kullanıcı için verilecek hak
@@ -22,21 +24,23 @@ public class RegisterController {
     }
 
     // WRITER HAK SAYISI ADMIN BELIRLESIN
-    public static void myFileWriter() {
+    private void adminMyFileWriter() {
         // false: en son file silsin ve en son eklenen, eklensin.
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(MyPathName.MY_PATH_NAME, false))) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileNewPath.getPath(), false))) {
             String user = userData();
             bufferedWriter.write(user);
             bufferedWriter.flush();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        // redirect
+        myFileReader();
     }
 
     // Kalan Hakkı Dosyaya yazsın
-    public static void myFileWriterNumberOfRights(int counter) {
+    private void myFileWriterNumberOfRights(int counter) {
         // false: en son file silsin ve en son eklenen, eklensin.
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(MyPathName.MY_PATH_NAME, false))) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileNewPath.getPath(), false))) {
             bufferedWriter.write(String.valueOf(counter));
             bufferedWriter.flush();
         } catch (Exception e) {
@@ -45,29 +49,35 @@ public class RegisterController {
     }
 
     // READER HAK SAYISI
-    public static int myFileReader() {
+    private int myFileReader() {
         String dataToString = null;
-        int numberOfRights; //hak sayısı
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(MyPathName.MY_PATH_NAME))) {
+        Integer numberOfRights = null; //hak sayısı
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(fileNewPath.getPath()))) {
             StringBuilder stringBuilder = new StringBuilder();
             String readRows;
             while ((readRows = bufferedReader.readLine()) != null) {
                 stringBuilder.append(readRows);
             }
             dataToString = stringBuilder.toString();
-            //System.out.println(dataToString);
+            System.out.println(dataToString);
+            if(dataToString.equals("") || dataToString.equals(" ")|| dataToString=="" || dataToString==" " || dataToString==null){
+                adminMyFileWriter();
+            }
+            numberOfRights = Integer.valueOf(dataToString);
+            System.out.println(numberOfRights);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        numberOfRights = Integer.valueOf(dataToString);
         return numberOfRights;
     }
 
     // username: root password:root => admin sayfasına yönlendirsin
     // eğer yanlış yaparsa haktan 1 azaltsın eğer hakkınız kalmazsa sistemi kilitlesin
-    public static boolean isLogin() {
-        // Hak sayısı
-        int counter = myFileReader();
+    private boolean isLogin() {
+        // Hak sayısı (Admin)
+        //myFileWriter();
+        Integer counter = myFileReader();
+        System.out.println(counter);
         // interface abstract inheritance nedir ? bunlarsınız kod yazabilir miyiz?
         if (counter == 0) {
             if (counter == 0) {
@@ -114,8 +124,8 @@ public class RegisterController {
 
     // BLOG PAGE
     private static void blogPage() {
-        BlogController  blogController=new BlogController();
-        for(;;){ // Sonsuz Döngü
+        BlogController blogController = new BlogController();
+        for (; ; ) { // Sonsuz Döngü
             blogController.chooiseMethod();
         }
     }
