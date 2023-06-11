@@ -21,6 +21,7 @@ public class BlogController implements IBlogController {
     @Override
     public void blogCreate(BlogDto blogDto) {
         blogDao.create(blogDto);
+        JOptionPane.showMessageDialog(null, blogDto, "EKLENDI", JOptionPane.INFORMATION_MESSAGE);
     }
 
     // LIST
@@ -29,6 +30,7 @@ public class BlogController implements IBlogController {
         blogDao.list().forEach((temp) -> {
             System.out.println(temp);
         });
+        JOptionPane.showMessageDialog(null, null, "LISTELENDI", JOptionPane.INFORMATION_MESSAGE);
     }
 
     // FIND
@@ -37,8 +39,10 @@ public class BlogController implements IBlogController {
         BlogDto findById = blogDao.findById(id);
         if (findById.getId() != null) {
             System.out.println("\n" + findById);
+            JOptionPane.showMessageDialog(null, findById, "BULUNDU", JOptionPane.INFORMATION_MESSAGE);
         } else {
             System.err.println(id + " nolu bulunamadı");
+            JOptionPane.showMessageDialog(null, findById, "BULUNAMADI", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -47,12 +51,15 @@ public class BlogController implements IBlogController {
     @Override
     public void blogUpdate(BlogDto blogDto) {
         blogDao.update(blogDto);
+        JOptionPane.showMessageDialog(null, blogDto, "GÜNCELLENDİ", JOptionPane.INFORMATION_MESSAGE);
     }
 
     // DELETE
     @Override
     public void blogDelete(BlogDto blogDto) {
-            blogDao.delete(blogDto);
+        // Silmek istediğinizden Emin misiniz ?
+        blogDao.delete(blogDto);
+        JOptionPane.showMessageDialog(null, blogDto, "SİLİNDİ", JOptionPane.INFORMATION_MESSAGE);
     }
 
     // ###########################################################################
@@ -113,6 +120,7 @@ public class BlogController implements IBlogController {
                     blogUpdate(blogDto2);
                 } else {
                     System.err.println(findById.getId() + " nolu bulunamadı");
+                    JOptionPane.showMessageDialog(null, "Güncellemedi!", findById.getId() + " nolu bulunamadı", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case 5:
@@ -124,10 +132,23 @@ public class BlogController implements IBlogController {
 
                 BlogDto findById3 = blogDao.findById(blogDto3.getId());
                 if (findById3.getId() != null) {
-                    blogDelete(blogDto3);
+                    int result = JOptionPane.showConfirmDialog(null, "Silmek istediğinizde emin misiniz ?");
+                    // EVET:0  HAYIR:1 ÇIKIŞ: 2
+                    if(result==0){
+                        blogDelete(blogDto3);
+                    }else if(result==1){
+                        System.out.println("Silinmedi ");
+                        JOptionPane.showMessageDialog(null, "Silinmedi!", "HAYIR TUŞUNA BASTINIZ", JOptionPane.ERROR_MESSAGE);
+                    }else if(result==2){
+                        JOptionPane.showMessageDialog(null, "Direk Çıkıldı!", blogDto3.getId() + " nolu bulunamadı", JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        System.out.println("Belirtilenin dışına çıkıldı");
+                        JOptionPane.showMessageDialog(null, "Çıkış oldu!", "Belirtilenin dışına çıkıldı", JOptionPane.ERROR_MESSAGE);
+                    }
                 } else {
                     //throw new BadRequestException(blogDto.getId() + " id bulunamadı");
                     System.err.println("Aradığınız " + blogDto3.getId() + " ID YOKTUR");
+                    JOptionPane.showMessageDialog(null, "ID YOKTUR!", blogDto3.getId() + " nolu bulunamadı", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case 6:

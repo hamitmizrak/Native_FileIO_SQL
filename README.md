@@ -5,6 +5,12 @@
 Projemiz FİLE/IO ve Native SQL üzerine kurulurudur.
 Amaçımız Register/Login ve CRUD işlemlerini anlamak.
 
+NOT: Swing kütüphanesindeki;
+-JOptionalPane.showInputDialog (Kullanıcı veri almak)
+-JOptionalPane.showConfirmDialog (Onay)
+-JOptionalPane.showMessageDialog (Message)
+
+
 STEP:1
 Login olabilmek için inmemory olarak verdiğimiz  email: root ve password:root kullancıdan bu bilgileri isteyelim.
 Eğer bu bilgileri doğru girmezse admin tarafıdnan daha önceden verilen kullanıcı giriş hakkından aşağıya doğru düşecek
